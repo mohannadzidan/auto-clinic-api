@@ -1,0 +1,97 @@
+.steps-progress-bar {
+    position: relative;
+}
+
+.bar {
+    position: absolute;
+    background: #47b2e4;
+    height: 5px;
+    transition: right 200ms, left 200ms;
+    top: 20px;
+    right: 100%;
+    left: 50%;
+}
+
+.muted-bar {
+    position: absolute;
+    background: lightgray;
+    height: 5px;
+    transition: right 200ms, left 200ms;
+    top: 20px;
+    right: 100%;
+    left: 50%;
+    z-index: -1;
+}
+
+.bonk {
+    position: fixed;
+    top: 100px;
+}
+
+.steps-progress-bar ul {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    display: flex;
+    justify-content: space-between;
+}
+
+
+
+.steps-progress-bar ul>.step {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.steps-progress-bar ul>.step .bubble {
+    border: 3px solid lightgray;
+    border-radius: 100%;
+    width: 40px;
+    height: 40px;
+    line-height: 25px;
+    text-align: center;
+    background-color: #f3f5fa;
+    color: lightgray;
+    font-family: sans-serif;
+    font-size: 14px;
+    position: relative;
+    z-index: 1;
+}
+
+.steps-progress-bar .step-text {
+    margin: 15px 0 0 0;
+    transition: margin 300ms;
+    color: lightgray;
+    font-family: "Jost", sans-serif;
+    font-weight: 500;
+    text-transform: uppercase;
+    font-size: 10pt;
+}
+
+[stuck] .steps-progress-bar .step-text {
+    height: 0;
+    margin: 0;
+    opacity: 0;
+
+}
+
+.steps-progress-bar ul>.step.active .bubble {
+    border-color: #47b2e4;
+    background-color: #47b2e4;
+    color: #fff;
+    box-shadow: 0px 0px 0px 10px rgba(71, 178, 228, 0.36);
+    transition: box-shadow 500ms;
+
+}
+
+.steps-progress-bar ul>.step.done .bubble {
+    border-color: #47b2e4;
+    background-color: #47b2e4;
+    color: #fff;
+}
+
+.steps-progress-bar ul>.step.done .bubble+.step-text,
+.steps-progress-bar ul>.step.active .bubble+.step-text {
+    color: #47b2e4;
+}

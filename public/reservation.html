@@ -29,6 +29,8 @@
 
   <!-- Template Main CSS File -->
   <link href="assets/css/style.css" rel="stylesheet">
+  <link href="assets/css/progress-bar.css" rel="stylesheet">
+  <link href="assets/css/reservation.css" rel="stylesheet">
 
   <!-- =======================================================
   * Template Name: Auto Clinic - v4.7.1
@@ -65,35 +67,262 @@
   </header><!-- End Header -->
 
 
-  <main id="main">
+  <!-- ======= Breadcrumbs ======= -->
+  <section id="breadcrumbs" class="breadcrumbs">
+    <div class="container">
 
-    <!-- ======= Breadcrumbs ======= -->
-    <section id="breadcrumbs" class="breadcrumbs">
-      <div class="container">
+      <ol>
+        <li><a href="index.html" locale-text="home"></a></li>
+        <li locale-text="reservation"></li>
+      </ol>
+      <h2 locale-text="reservation"></h2>
 
-        <ol>
-          <li><a href="index.html" locale-text="home">Home</a></li>
-          <li locale-text="reservation"></li>
-        </ol>
-        <h2 locale-text="reservation"></h2>
+    </div>
+  </section><!-- End Breadcrumbs -->
+  <section id="progress-bar-section" class="section-bg border-bottom py-3 sticky-top">
+    <div class="container">
+      <div id="progress-bar" class="steps-progress-bar">
+        <div class="bar"></div>
+        <div class="muted-bar"></div>
+        <ul>
+          <!-- registration -->
+          <li class="step active">
+            <div class="bubble">
+              <i class="bi bi-person-badge position-absolute top-50 start-50 translate-middle fs-5"></i>
+            </div>
+            <div class="step-text">Registration </div>
+          </li>
+          <!-- reservation -->
+          <li class="step">
+            <div class="bubble">
+              <i class="bi bi-alarm position-absolute top-50 start-50 translate-middle fs-5"></i>
+            </div>
+            <div class="step-text">Reservation
+            </div>
+          </li>
+          <!-- date and time -->
+          <li class="step">
+            <div class="bubble">
+              <i class="bi bi-door-open position-absolute top-50 start-50 translate-middle fs-5"></i>
+            </div>
+            <div class="step-text">Visit</div>
+          </li>
 
+        </ul>
       </div>
-    </section><!-- End Breadcrumbs -->
-    <!-- ======= About Us Section ======= -->
-    <section class="about">
-      <div class="container" data-aos="fade-up">
-
-        <form class="">
-          <div class="mb-3">
-            <label for="exampleInputEmail1" class="form-label">National ID Number</label>
-            <input type="text" class="form-control" aria-describedby="idHelp">
-            <div id="idHelp" class="form-text">Your national ID number will be used for registration</div>
+    </div>
+  </section>
+  <!-- ======= About Us Section ======= -->
+  <section>
+    <div class="container" id="root">
+      <form action="/api/reservations" method="post" id="registration-form" class="d-block">
+        <div class="card text-white bg-primary mb-3">
+          <div class="card-body d-flex flex-row align-items-center">
+            <i class="bi bi-exclamation-triangle-fill mx-2" style="font-size: 24pt;"></i>
+            <p class="card-text" locale-text="please-be-accurate-paragraph"></p>
           </div>
-          <button type="submit" class="btn btn-info text-white fw-bold">Continue</button>
-        </form>
-    </section><!-- End About Us Section -->
+        </div>
+        <!-- Name -->
+        <div class="mb-3">
+          <label for="name" class="form-label" locale-text="name">Name</label>
+          <input type="text" class="form-control" id="name" name="name" required>
+          <!-- <div id="name" class="form-text">We'll never share your email with anyone else.</div> -->
+        </div>
+        <div class="mb-3">
+          <label for="national-id" class="form-label" locale-text="national-id">National ID</label>
+          <input type="number" class="form-control" id="national-id" minlength="14" maxlength="14" name="nationalId"
+            required>
+          <!-- <div id="name" class="form-text">We'll never share your email with anyone else.</div> -->
+        </div>
+        <!-- Date of birth -->
+        <div class="mb-3">
+          <label for="birthDate" class="form-label" locale-text="date-of-birth">Date of Birth</label>
+          <input class="form-control" type="date" required name="birthDate" min="1900-01-01T00:00:00" required>
 
-  </main><!-- End #main -->
+          <!-- <div id="name" class="form-text">We'll never share your email with anyone else.</div> -->
+        </div>
+        <!-- Gender -->
+        <div class="mb-3 row g-3">
+          <div class="col-sm-2">
+            <label class="form-label" locale-text="gender">Gender</label>
+          </div>
+          <div class="col-sm-10">
+            <div class="form-check">
+              <input class="form-check-input" type="radio" name="gender" id="male-checkbox" value="male" checked>
+              <label class="form-check-label" for="male-checkbox" locale-text="male">
+                Male
+              </label>
+            </div>
+            <div class="form-check">
+              <input class="form-check-input" type="radio" name="gender" id="female-checkbox" value="female">
+              <label class="form-check-label" for="female-checkbox" locale-text="female">
+                Female
+              </label>
+            </div>
+          </div>
+        </div>
+        <!-- City -->
+        <div class="mb-3">
+          <label class="form-label" locale-text="city">City</label>
+          <select class="form-select" aria-label="Default select example" name="city" required>
+            <option value="cairo,egypt">Cairo, Egypt</option>
+          </select>
+        </div>
+        <!-- Phone Number -->
+        <div class="mb-3">
+          <label for="phonenumber" class="form-label" locale-text="phone-number"></label>
+          <input type="tel" class="form-control" id="phonenumber" aria-describedby="emailHelp" name="phoneNumber"
+            required>
+        </div>
+
+        <div class="mb-3">
+          <h6 locale-text="chronic-disease-question"></h6>
+          <div class="form-check">
+            <input class="form-check-input" type="checkbox" id="chronic-chronic-diseases-diabetic" value="true"
+              name="hasDiabetic">
+            <label class="form-check-label" for="chronic-chronic-diseases-diabetic" locale-text="diabetic">
+            </label>
+          </div>
+          <div class="form-check">
+            <input class="form-check-input" type="checkbox" id="chronic-diseases-hypertension" value="true"
+              name="hasHypertension">
+            <label class="form-check-label" for="chronic-diseases-hypertension" locale-text="hypertension">
+            </label>
+          </div>
+          <div class="form-check">
+            <input class="form-check-input" type="checkbox" id="chronic-diseases-heart-disease" value="true"
+              name="hasHeartDisease">
+            <label class="form-check-label" for="chronic-diseases-heart-disease" locale-text="heart-disease">
+            </label>
+          </div>
+          <div class="form-check">
+            <input class="form-check-input" type="checkbox" id="chronic-diseases-obesity" value="true"
+              name="hasObesity">
+            <label class="form-check-label" for="chronic-diseases-obesity" locale-text="obesity">
+            </label>
+          </div>
+
+          <div class="form-check">
+            <input class="form-check-input" type="checkbox" id="chronic-diseases-caner" value="true" name="hasCancer">
+            <label class="form-check-label" for="chronic-diseases-caner" locale-text="cancer">
+            </label>
+          </div>
+
+          <div class="form-check">
+            <input class="form-check-input" type="checkbox" id="chronic-diseases-asthma" value="true" name="hasAsthma">
+            <label class="form-check-label" for="chronic-diseases-asthma" locale-text="asthma">
+            </label>
+          </div>
+
+        </div>
+        <div class="mb-3">
+          <h6 locale-text="symptoms-question"></h6>
+          <div class="form-check">
+            <input class="form-check-input" type="checkbox" id="symptoms-fever" value="true" name="hasFever">
+            <label class="form-check-label" for="symptoms-fever" locale-text="symptoms-fever">
+            </label>
+          </div>
+          <div class="form-check">
+            <input class="form-check-input" type="checkbox" id="symptoms-cough" value="true" name="hasCough">
+            <label class="form-check-label" for="symptoms-cough" locale-text="symptoms-cough">
+            </label>
+          </div>
+
+          <div class="form-check">
+            <input class="form-check-input" type="checkbox" id="symptoms-tiredness" value="true" name="hasTiredness">
+            <label class="form-check-label" for="symptoms-tiredness" locale-text="symptoms-tiredness">
+            </label>
+          </div>
+
+          <div class="form-check">
+            <input class="form-check-input" type="checkbox" id="symptoms-loss-of-taste-or-smell" value="true"
+              name="hasLossOfTasteOrSmell">
+            <label class="form-check-label" for="symptoms-loss-of-taste-or-smell"
+              locale-text="symptoms-loss-of-taste-or-smell">
+            </label>
+          </div>
+
+          <div class="form-check">
+            <input class="form-check-input" type="checkbox" id="symptoms-sore-throat" value="true" name="hasSoreThroat">
+            <label class="form-check-label" for="symptoms-sore-throat" locale-text="symptoms-sore-throat">
+            </label>
+          </div>
+
+          <div class="form-check">
+            <input class="form-check-input" type="checkbox" id="symptoms-headache" value="true" name="hasHeadache">
+            <label class="form-check-label" for="symptoms-headache" locale-text="symptoms-headache">
+            </label>
+          </div>
+
+          <div class="form-check">
+            <input class="form-check-input" type="checkbox" id="symptoms-aches-and-pains" value="true"
+              name="hasAchesAndPains">
+            <label class="form-check-label" for="symptoms-aches-and-pains" locale-text="symptoms-aches-and-pains">
+            </label>
+          </div>
+
+
+
+          <div class="form-check">
+            <input class="form-check-input" type="checkbox" id="symptoms-diarrhea" value="true" name="hasDiarrhea">
+            <label class="form-check-label" for="symptoms-diarrhea" locale-text="symptoms-diarrhea">
+            </label>
+          </div>
+
+          <div class="form-check">
+            <input class="form-check-input" type="checkbox" id="symptoms-red-or-irritated" value="true"
+              name="hasRedOrIrritatedEyes">
+            <label class="form-check-label" for="symptoms-red-or-irritated" locale-text="symptoms-red-or-irritated">
+            </label>
+          </div>
+        </div>
+        <div class="mb-3">
+          <h6 locale-text="smoking-question"></h6>
+          <div class="form-check">
+            <input class="form-check-input" type="radio" id="do-you-smoke-yes" value="true" name="isSmoking">
+            <label class="form-check-label" for="do-you-smoke-yes" locale-text="yes">
+            </label>
+          </div>
+          <div class="form-check">
+            <input class="form-check-input" type="radio" value="false" name="isSmoking" checked>
+            <label class="form-check-label" for="do-you-smoke-no" checked locale-text="no"></label>
+          </div>
+        </div>
+
+        <div class="row g-3 mb-3">
+          <div class="col-sm-2">
+            <label class="form-label" locale-text="reservation-time"></label>
+          </div>
+          <div class="col-sm-10">
+            <input class="form-control" type="datetime-local" required name="date">
+          </div>
+
+        </div>
+        <div id="error-card" class="card border-danger mb-3" style="display: none;">
+          <div class="card-body text-danger">
+            <h5 class="card-title" locale-text="error">Error</h5>
+            <p class="card-text"></p>
+          </div>
+        </div>
+        <input id="submit-button" type="submit" class="btn btn-primary mb-3" locale-text="continue"></input>
+      </form>
+      <div id="reservation-confirmation-container" class="row content d-none">
+        <div class="col-lg-6 text-center text-lg-start">
+          <h3></h3>
+          <p> <span locale-text="please-dont-be-late"></span> <strong id="appointment-time">12:02 AM, Sunday 24 April</strong></p>
+          <p locale-text="qr-code-screenshot-note-paragraph"></p>
+        </div>
+        <div class="col-lg-6 pt-4 pt-lg-0">
+          <div class="d-flex flex-column align-items-center">
+            <div id="reservation-qrcode"></div>
+            <div class="mt-3" id="reservation-code">s5D6FqTHHFqwsA</div>
+          </div>
+        </div>
+      </div>
+      <div>
+      </div>
+  </section><!-- End About Us Section -->
+
 
   <!-- ======= Footer ======= -->
   <footer id="footer">
@@ -147,9 +376,14 @@
   <script src="assets/vendor/swiper/swiper-bundle.min.js"></script>
   <script src="assets/vendor/waypoints/noframework.waypoints.js"></script>
   <script src="assets/vendor/php-email-form/validate.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"
+    integrity="sha512-CNgIRecGo7nphbeZ04Sc13ka07paqdeTu0WR1IM4kNcpmBAUSHSQX0FslNhTDadL4O5SAGapGt4FodqL8My0mA=="
+    crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 
   <!-- Template Main JS File -->
+  <script src="assets/js/progress-bar.js"></script>
   <script src="assets/js/main.js"></script>
+  <script src="assets/js/reservation.js"></script>
 
 </body>
 

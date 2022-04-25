@@ -4,11 +4,11 @@
  * @param payload
  * @returns {{package, message, status: boolean}}
  */
-exports.successResponse = (message, payload) => {
+exports.successResponse = (payload = undefined) => {
     return {
         status: true,
-        message: message,
-        package: payload
+        message: 'SUCCESS',
+        payload: payload
     }
 }
 

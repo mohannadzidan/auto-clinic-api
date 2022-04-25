@@ -16,8 +16,9 @@ exports.validate = (validations) => {
             return next()
         }
 
+        const error = errors.array()[0];
         res.status(process.env.VALIDATION_FAIL_CODE).json(
-            methods.failResponse("Validation failed", errors.array())
+            methods.failResponse(error.msg, error)
         )
     }
 }

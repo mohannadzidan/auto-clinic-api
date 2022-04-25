@@ -1,13 +1,13 @@
 const express = require("express")
 const router = express.Router()
 
-const profilesController = require("../controllers/profiles.controller")
+const reservationController = require("../controllers/reservation.controller")
 const { validate } = require("../middlewares/validators/wrapper.validator")
 const {
-    completeProfileValidator
-} = require("../middlewares/validators/profiles.validation")
+    completeReservationValidator
+} = require("../middlewares/validators/reservations.validation")
 
-router.get("/api/profiles/:id", profilesController.profile)
-router.post("/api/profiles", validate(completeProfileValidator), profilesController.profilePost)
+router.get("/api/reservations/:id", reservationController.reservation)
+router.post("/api/reservations", validate(completeReservationValidator), reservationController.reservationPost)
 
 module.exports = router

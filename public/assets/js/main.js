@@ -1,70 +1,75 @@
-/**
-* Template Name: Arsha - v4.7.1
-* Template URL: https://bootstrapmade.com/arsha-free-bootstrap-html-template-corporate/
-* Author: BootstrapMade.com
-* License: https://bootstrapmade.com/license/
-*/
-(function () {
-  "use strict";
-  const getCookie = (cname) => {
-    let name = cname + "=";
-    let decodedCookie = decodeURIComponent(document.cookie);
-    let ca = decodedCookie.split(';');
-    for (let i = 0; i < ca.length; i++) {
-      let c = ca[i];
-      while (c.charAt(0) == ' ') {
-        c = c.substring(1);
-      }
-      if (c.indexOf(name) == 0) {
-        return c.substring(name.length, c.length);
-      }
-    }
-    return "";
-  }
-
-  const setCookie = (cname, cvalue, exdays) => {
-    const d = new Date();
-    d.setTime(d.getTime() + (exdays * 24 * 60 * 60 * 1000));
-    let expires = "expires=" + d.toUTCString();
-    document.cookie = cname + "=" + cvalue + ";" + expires + ";path=/";
-  }
-
-  const setWebsiteLanguage = (language) => {
-    const htmlTag = document.querySelector('html');
-    if (language === 'ar-AR') {
-      htmlTag.dir = 'rtl'
-      htmlTag.lang = language;
-    } else {
-      language = 'en-EN'
-      htmlTag.dir = 'ltr';
-      htmlTag.lang = language;
-    }
-    return fetch('locale/' + language + '.json').then(res => {
+function LanguageManager() {
+  this.languagePack = undefined;
+  this.listeners = [];
+  this.load = (lang_id) => {
+    return fetch('locale/' + lang_id + '.json').then(res => {
       return res.json()
     }).then(languagePack => {
-      console.log(languagePack);
-      const x = Array.from(document.querySelectorAll('[locale-text]'));
-      x.forEach(element => {
-        element.innerHTML = languagePack[element.getAttribute('locale-text')]
-      });
-      setCookie('language', language, 365);
+      const htmlTag = document.querySelector('html');
+      htmlTag.dir = languagePack.dir
+      htmlTag.lang = lang_id;
+      localStorage.setItem('language', lang_id);
+      this.languagePack = languagePack;
+      this.listeners.forEach(x => x(languagePack))
     }).catch(console.error);
+  }
 
+  this.addLanguageChangeListener = (listener) => {
+    this.listeners.push(listener);
+    if (this.languagePack) listener(this.languagePack);
   }
-  if (getCookie('language').length === 0) {
-    setCookie('language', 'en-EN', 365);
+  
+  this.getLocaleText = (key) => {
+    if(this.languagePack?.data)
+      return this.languagePack.data[key];
   }
+  this.removeLanguageChangeListener = (listener) => {
+    let index = this.listeners.findIndex((x) => x === listener);
+    if (index !== -1)
+      this.listeners.splice(index, 1);
+  }
+  if (localStorage.getItem('language') === undefined) {
+    localStorage.setItem('language', 'en-EN');
+  }
+  this.load(localStorage.getItem('language'));
+}
+
+var languageManager = new LanguageManager();
+function DynamicElement(htmlTemplate) {
+  this.root = document.createElement('div');
+  root.innerHTML = htmlTemplate;
+  
+  const onLanguageChangeLister = (languagePack) => {
+    Array.from(root.querySelectorAll('[locale-text]')).forEach(element => {
+      element.innerHTML = languagePack.data[element.getAttribute('locale-text')]
+    });
+  }
+  this.render = (rootElement) => {
+    languageManager.addLanguageChangeListener(onLanguageChangeLister);
+    console.log(root);
+    //rootElement.append(root);
+  }
+  this.remove = () => {
+    languageManager.removeLanguageChangeListener(onLanguageChangeLister);
+    root.remove();
+  }
+}
+
+
+(function () {
+  "use strict";
 
   document.getElementById('lang-button').addEventListener('click', () => {
-    document.querySelector('#preloader').classList.remove('d-none');
-
-    const currentLang = getCookie('language') === 'en-EN' ? 'ar-AR' : 'en-EN';
-    setWebsiteLanguage(currentLang).then(() => {
-      setTimeout(() => document.querySelector('#preloader').classList.add('d-none'), 300)
-    })
+    const currentLang = localStorage.getItem('language') === 'en-EN' ? 'ar-AR' : 'en-EN';
+    languageManager.load(currentLang);
   })
-  setWebsiteLanguage(getCookie('language'))
 
+
+  Array.from(document.querySelectorAll('[locale-text]')).forEach(element => {
+    languageManager.addLanguageChangeListener((languagePack) => {
+      element.innerHTML = languagePack.data[element.getAttribute('locale-text')]
+    })
+  });
   /**
    * Easy selector helper function
    */

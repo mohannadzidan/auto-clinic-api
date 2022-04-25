@@ -1,13 +1,8 @@
 
 const Datastore = require('nedb')
-const profiles = process.env.TESTING ? new Datastore() : new Datastore({ filename: './.nedb/profiles.db' });
-const symptomsForms = process.env.TESTING ? new Datastore() : new Datastore({ filename: './.nedb/symptoms.db' });
-profiles.loadDatabase(function (err) {
+const reservations = process.env.TESTING ? new Datastore() : new Datastore({ filename: './.nedb/reservations.db' });
+reservations.loadDatabase(function (err) {
     if (err) console.error('Failed to load profiles database!', err);
-});
-
-symptomsForms.loadDatabase(function (err) {
-    if (err) console.error('Failed to load symptoms forms database!', err);
 });
 
 class PatientProfile {
@@ -19,7 +14,7 @@ class PatientProfile {
 
     constructor(patentId, name, birthDate, gender, phoneNumber, address, hasHypertension, hasDiabetes, hasObesity, hasAllergies, hasCancer, isSmoker) {
         this._id = undefined;
-        this.patentId = patentId;
+        this.nationalId = nationalId;
         this.name = name;
         this.birthDate = birthDate;
         this.gender = gender;
@@ -36,23 +31,13 @@ class PatientProfile {
 }
 
 
-class SymptomsForm {
-    constructor(patentId, hasCough, hasFever, hasDiarrhea) {
-        this._id = undefined;
-        this.patentId = patentId;
-        this.hasCough = hasCough;
-        this.hasFever = hasFever;
-        this.hasDiarrhea = hasDiarrhea;
-    }
-}
-
 /**
  * 
- * @param {PatientProfile} profile 
+ * @param {PatientProfile} reservation 
  */
-function registerProfile(profile) {
+function makeReservation(reservation) {
     return new Promise((resolve, reject) => {
-        profiles.insert(profile, (err, newDoc) => {
+        reservations.insert(reservation, (err, newDoc) => {
             if (err) return reject(err);
             resolve(newDoc);
         });
@@ -64,48 +49,17 @@ function registerProfile(profile) {
  * @param {string} id 
  * @returns {Promise<PatientProfile>}
  */
-function getProfile(id) {
+function getReservation(id) {
     return new Promise((resolve, reject) => {
-        profiles.findOne({ patentId: id }, (err, doc) => {
+        reservations.findOne({ _id: id }, (err, doc) => {
             if (err) return reject(err);
             return resolve(doc);
         });
     });
 }
 
-/**
- * 
- * @param {SymptomsForm} symptomsForm  
- * @returns {Promise<SymptomsForm>}
- */
-function registerSymptomsForm(symptomsForm) {
-    return getProfile(symptomsForm.patentId) // make sure that the profile exist
-        .then(doc => {
-            return new Promise((resolve, reject) => {
-                symptomsForms.insert(symptomsForm, (err, newDoc) => {
-                    if (err) return reject(err);
-                    resolve(newDoc);
-                });
-            });
-        });
-}
 
-/**
- * 
- * @param {string} formId 
- * @returns {Promise<SymptomsForm>}
- */
-function getSymptomsForm(formId) {
-    return new Promise((resolve, reject) => {
-        symptomsForms.findOne({ id: formId }, (err, doc) => {
-            if (err) return reject(err);
-            return resolve(doc);
-        });
-    });
-}
-
-exports.registerProfile = registerProfile;
-exports.getProfile = getProfile;
-exports.registerSymptomsForm = registerSymptomsForm;
-exports.getSymptomsForm = getSymptomsForm;
+exports.reservations = reservations;
+exports.makeReservation = makeReservation;
+exports.getReservation = getReservation;
 
