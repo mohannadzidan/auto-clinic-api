@@ -28,7 +28,7 @@ function LanguageManager() {
     if (index !== -1)
       this.listeners.splice(index, 1);
   }
-  if (localStorage.getItem('language') === undefined) {
+  if (!localStorage.getItem('language')) {
     localStorage.setItem('language', 'en-EN');
   }
   this.load(localStorage.getItem('language'));

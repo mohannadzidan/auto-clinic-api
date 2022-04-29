@@ -1,6 +1,4 @@
 const { body } = require("express-validator")
-
-const { date } = require('../sanitizers/forms');
 const { isNationalId } = require('./national-id');
 const availableCities = ['cairo,egypt'];
 /**
@@ -8,7 +6,7 @@ const availableCities = ['cairo,egypt'];
  * @type {ValidationChain[]}
  */
 exports.completeReservationValidator = [
-    body("name").isString().isLength({ min: 5, max: 30 }).withMessage("name is required to be a string"),
+    body("name").isString().isLength({ min: 5, max: 30 }).withMessage("name is required to be a string, and with length between 5 to 30 characters."),
     body("nationalId").custom(isNationalId).withMessage("ERROR_INVALID_NATIONAL_ID"),
     body("birthDate").isISO8601().withMessage("birthDate is required to be ISO8601"),
     body("gender").isIn(['male', 'female']).withMessage("gender is required one of [male, female]"), // xD

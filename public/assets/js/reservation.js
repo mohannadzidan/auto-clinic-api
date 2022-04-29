@@ -84,11 +84,15 @@
     }
     const [year, month, day] = data.birthDate.split('-');
     data.birthDate = new Date(year, month, day).toISOString();
+    /**
+     * GET: Retrieve data
+     * POST: Send resource
+     * 
+    */
     fetch('/api/reservations', {
       method: 'post',
       headers: {
         'Content-Type': 'application/json'
-        // 'Content-Type': 'application/x-www-form-urlencoded',
       },
       body: JSON.stringify(data)
     }).then((res) => {
@@ -97,7 +101,6 @@
       if (json.status) {
         progressBar.goto(1);
         console.log(json);
-
         var qrcode = new QRCode(document.getElementById("reservation-qrcode"), {
           text: json.payload._id,
           width: 180,

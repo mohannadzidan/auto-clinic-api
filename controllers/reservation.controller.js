@@ -26,8 +26,9 @@ exports.reservation = (req, res) => {
  * @returns {Promise<void>}
  */
 exports.reservationPost = (req, res) => {
-    makeReservation(req.body).then(d => res.status(201).send(methods.successResponse(d))).catch(err => {
+    makeReservation(req.body)
+    .then(d => res.status(201).send(methods.successResponse(d)))
+    .catch(err => {
         res.status(500).send(methods.failResponse('INTERNAL_ERROR'));
-        throw err;
     })
 }

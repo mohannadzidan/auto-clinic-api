@@ -7,12 +7,7 @@ reservations.loadDatabase(function (err) {
 
 class PatientProfile {
 
-    static GENDER = {
-        MALE: 1,
-        FEMALE: 0
-    }
-
-    constructor(patentId, name, birthDate, gender, phoneNumber, address, hasHypertension, hasDiabetes, hasObesity, hasAllergies, hasCancer, isSmoker) {
+    constructor(name, birthDate, gender, phoneNumber, address, hasHypertension, hasDiabetes, hasObesity, hasAllergies, hasCancer, isSmoker) {
         this._id = undefined;
         this.nationalId = nationalId;
         this.name = name;
