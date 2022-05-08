@@ -31,16 +31,18 @@ exports.findReservationsByNationalID = (req, res) => {
         if (err) {
             return res.status(500).json(methods.failResponse('INTERNAL_ERROR'));
         }
+
         documents.forEach((doc) => {
+            doc.isRecurrent = documents.length > 1;
             let matched = protocols[0];
             protocols.forEach(protocol => {
                 if (doc[protocol.matcher] === undefined) console.error("couldn't match with " + protocol.matcher, protocol);
-                if (doc[protocol.matcher] && protocol.priority > matched.priority){
+                if (doc[protocol.matcher] && protocol.priority > matched.priority) {
                     matched = protocol;
                 }
             });
             doc.protocol = {
-                medications: matched.medications, 
+                medications: matched.medications,
                 name: matched.name
             };
         });
