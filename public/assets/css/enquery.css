@@ -1,0 +1,62 @@
+#logs-section {
+    border-radius: 10px;
+    overflow: hidden;
+    border: 1px solid #f3f5fa;
+}
+
+
+.bg-light {
+    background-color: #f3f5fa !important;
+}
+
+#reservation-times,
+#reservation-data {
+    overflow-x: hidden;
+    overflow-y: auto;
+    height: 60vh;
+}
+@media screen and (max-width: 992px) {
+    #reservation-times,
+    #reservation-data {
+        height: auto;
+    }
+    #reservation-times{
+        max-height: 40vh;
+    }
+
+}
+@media screen and (max-width: 576px) {
+
+   
+    #logs-section {
+        border-radius: 0;
+    }
+    section {
+        padding: 0;
+    }
+
+    form{
+        padding: 60px 0;
+    }
+}
+
+
+
+
+.reservation-time {
+    font-weight: 600;
+    background-color: rgba(0, 0, 0, 0);
+    cursor: pointer;
+    user-select: none;
+    transition: background-color 100ms;
+}
+
+.reservation-time:hover {
+    background-color: rgba(0, 0, 0, 0.05);
+}
+
+.reservation-time.active {
+    background-color: #209dd8;
+    color: white;
+
+}

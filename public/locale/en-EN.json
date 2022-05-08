@@ -69,6 +69,20 @@
         "qr-code-screenshot-note-paragraph": "It's <strong>very important</strong> to keep a screenshot of this QR code, as it contains your reservation info, and you will be required to provide it at the SmartClinic center entrance.",
         "please-dont-be-late": ">Please do not be late for the appointed time, which will be at",
         "error": "Error",
-        "ERROR_INVALID_NATIONAL_ID": "Invalid national id, national id is required to be real"
+        "ERROR_INVALID_NATIONAL_ID": "Invalid national id, national id is required to be real",
+        "enquiry": "Enquiry",
+        "no-reservations-paragraph":"We couldn't find any previous reservations associated with this national ID, make sure that the entered data is correct and try again",
+        "safe-national-id-paragraph" : "We'll never share your national id with anyone else.",
+        "submit" : "Submit",
+        "reservations": "Reservations",
+        "data":"Data",
+        "medications": "Medications",
+        "protocol":"Protocol",
+        "note": "Note",
+        "no-notes-paragraph":"No notes available"
+
+
+        
+        
     }
 }
